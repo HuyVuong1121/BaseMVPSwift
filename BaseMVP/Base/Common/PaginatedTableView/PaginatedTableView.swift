@@ -31,9 +31,6 @@ public protocol PaginatedTableViewDataSource: class {
 //
 public class PaginatedTableView: UITableView {
     
-    // Loader cell ID
-    let cellId = "loadMoreCell"
-    
     // Infinite scrolling
     // Page size can be changed from view controller as well
     public var pageSize = 20

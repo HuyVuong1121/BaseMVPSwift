@@ -1,0 +1,18 @@
+/* 
+  Localizable.strings
+  BASE_MVP
+
+  Created by Chung-Sama on 7/27/19.
+  Copyright © 2019 ChungTV. All rights reserved.
+*/
+
+"Parameters were nil" = "Parameters were nil.";
+"Parameter encoding failed" = "Parameter encoding failed.";
+"URL is nil" = "URL is nil.";
+"You need to be authenticated first" = "You need to be authenticated first.";
+"Bad request" = "Bad request";
+"The url you requested is outdated" = "The url you requested is outdated.";
+"Network request failed" = "Network request failed.";
+"Response returned with no data to decode" = "Response returned with no data to decode.";
+"We could not decode the response" = "We could not decode the response.";
+"Please check your network connection" = "Please check your network connection.";
