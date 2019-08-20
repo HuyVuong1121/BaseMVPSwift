@@ -6,12 +6,12 @@
 //  Copyright © 2019 ChungTV. All rights reserved.
 //
 
-import Foundation
+import UIKit
 
-protocol IView: class {
+protocol IView where Self : UIView {
     func attachPresenter(_ presenter: IPresenter)
     var hasMVPChildren: Bool { get set }
-    func onInitView()
+    func onInitView(topLayoutGuide: UILayoutSupport, bottomLayoutGuide: UILayoutSupport)
     func onPortrait()
     func onLandscape()
 }

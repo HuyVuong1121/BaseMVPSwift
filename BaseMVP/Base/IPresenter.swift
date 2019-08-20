@@ -6,9 +6,9 @@
 //  Copyright © 2019 ChungTV. All rights reserved.
 //
 
-import Foundation
+import UIKit
 
-protocol IPresenter: class {
+protocol IPresenter where Self : UIViewController {
     func onPresenterReady()
     func onPresenterRelease()
     func executeCommand(command: ICommand)

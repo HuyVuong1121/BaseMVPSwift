@@ -10,7 +10,7 @@ import UIKit
 
 class BaseController: UIViewController {
     
-    init(isNil: Bool = true) {
+    init(isNil: Bool = false) {
         if isNil {
             super.init(nibName: nil, bundle: nil)
         } else {
@@ -20,13 +20,12 @@ class BaseController: UIViewController {
     }
     
     required init?(coder aDecoder: NSCoder) {
-        fatalError("🔹🔹🔹 init(coder:) has not been implemented 🔹🔹🔹")
+        fatalError("🚫🚫🚫 init(coder:) has not been implemented 🚫🚫🚫")
     }
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
     }
     
     override func viewWillAppear(_ animated: Bool) {
