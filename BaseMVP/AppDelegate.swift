@@ -44,7 +44,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     private func configWindow() {
         self.window = UIWindow(frame: UIScreen.main.bounds)
-        let rootViewController = UINavigationController(rootViewController: MainController())
+        let rootViewController = SwipeNavigationController(rootViewController: MainController())
         self.window?.rootViewController = rootViewController
         self.window?.makeKeyAndVisible()
     }

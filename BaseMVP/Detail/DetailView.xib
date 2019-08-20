@@ -19,18 +19,26 @@
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="WJX-EM-cBe">
                     <rect key="frame" x="0.0" y="44" width="414" height="818"/>
                     <subviews>
-                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zqb-4k-Zid">
-                            <rect key="frame" x="184" y="394" width="46" height="30"/>
-                            <state key="normal" title="Button"/>
+                        <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="YAV-XP-c0I" customClass="PaginatedTableView" customModule="BaseMVP" customModuleProvider="target">
+                            <rect key="frame" x="0.0" y="50" width="414" height="768"/>
+                            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        </tableView>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="DYR-li-VGS">
+                            <rect key="frame" x="10" y="10" width="48" height="30"/>
+                            <state key="normal" title="&lt; Back"/>
                             <connections>
-                                <action selector="gotoPrevScreen:" destination="iN0-l3-epB" eventType="touchUpInside" id="K91-wy-9KV"/>
+                                <action selector="gotoPrevScreen:" destination="iN0-l3-epB" eventType="touchUpInside" id="OvV-rz-alY"/>
                             </connections>
                         </button>
                     </subviews>
-                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <color key="backgroundColor" red="0.96078431369999995" green="0.65098039220000004" blue="0.098039215690000001" alpha="1" colorSpace="calibratedRGB"/>
                     <constraints>
-                        <constraint firstItem="zqb-4k-Zid" firstAttribute="centerY" secondItem="WJX-EM-cBe" secondAttribute="centerY" id="3T9-mO-qv4"/>
-                        <constraint firstItem="zqb-4k-Zid" firstAttribute="centerX" secondItem="WJX-EM-cBe" secondAttribute="centerX" id="afd-NT-19k"/>
+                        <constraint firstAttribute="bottom" secondItem="YAV-XP-c0I" secondAttribute="bottom" id="3ZV-tS-lo6"/>
+                        <constraint firstItem="YAV-XP-c0I" firstAttribute="leading" secondItem="WJX-EM-cBe" secondAttribute="leading" id="BPj-HF-984"/>
+                        <constraint firstItem="DYR-li-VGS" firstAttribute="top" secondItem="WJX-EM-cBe" secondAttribute="top" constant="10" id="T7v-3m-ExS"/>
+                        <constraint firstAttribute="trailing" secondItem="YAV-XP-c0I" secondAttribute="trailing" id="WB1-kx-p5I"/>
+                        <constraint firstItem="YAV-XP-c0I" firstAttribute="top" secondItem="DYR-li-VGS" secondAttribute="bottom" constant="10" id="WzT-Vp-urk"/>
+                        <constraint firstItem="DYR-li-VGS" firstAttribute="leading" secondItem="WJX-EM-cBe" secondAttribute="leading" constant="10" id="mee-at-tOm"/>
                     </constraints>
                 </view>
             </subviews>
@@ -44,7 +52,9 @@
             <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
             <connections>
                 <outlet property="mWrapperView" destination="WJX-EM-cBe" id="jDK-6c-mmQ"/>
+                <outlet property="tableView" destination="YAV-XP-c0I" id="TbV-is-Rud"/>
             </connections>
+            <point key="canvasLocation" x="47.826086956521742" y="41.517857142857139"/>
         </view>
     </objects>
 </document>

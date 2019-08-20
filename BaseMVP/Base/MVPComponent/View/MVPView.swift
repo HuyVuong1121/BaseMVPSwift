@@ -12,6 +12,8 @@ class MVPView: UIView, IView {
     
     @IBOutlet weak var mWrapperView: UIView!
     
+    @IBOutlet weak var mNameTitleLb: UILabel!
+    
     internal weak var mPresenter: IPresenter?
     
     func attachPresenter(_ presenter: IPresenter) {
@@ -37,6 +39,13 @@ class MVPView: UIView, IView {
         mPresenter = nil
         print("🔹🔹🔹 View \(type(of: self)) deinit 🔹🔹🔹")
     }
+    
+    func setTitle(_ name: String) {
+        if mNameTitleLb != nil {
+            mNameTitleLb.text = name
+        }
+    }
+    
     
     private func remakeWrapperView(topLayoutGuide: UILayoutSupport, bottomLayoutGuide: UILayoutSupport) {
         if #available(iOS 11.0, *) {} else {

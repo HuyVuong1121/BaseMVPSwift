@@ -17,6 +17,7 @@ class BaseController: UIViewController {
             super.init(nibName: String.className(type(of: self)), bundle: .main)
         }
         print("🔹🔹🔹 Presenter \(type(of: self)) init 🔹🔹🔹")
+        automaticallyAdjustsScrollViewInsets = false
     }
     
     required init?(coder aDecoder: NSCoder) {
