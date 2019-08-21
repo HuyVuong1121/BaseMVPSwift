@@ -38,6 +38,12 @@
 		54B88744230C1403003E8CA4 /* Router.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54B8873A230C1402003E8CA4 /* Router.swift */; };
 		54B88745230C1403003E8CA4 /* NetworkLogger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54B8873B230C1402003E8CA4 /* NetworkLogger.swift */; };
 		54B88746230C1403003E8CA4 /* EndPointType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54B8873C230C1402003E8CA4 /* EndPointType.swift */; };
+		54B8874A230CECDD003E8CA4 /* EnvConfiguration.plist in Resources */ = {isa = PBXBuildFile; fileRef = 54B88749230CECDD003E8CA4 /* EnvConfiguration.plist */; };
+		54B8874C230CED09003E8CA4 /* APIConstant.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54B8874B230CED09003E8CA4 /* APIConstant.swift */; };
+		54B8874E230CEDC9003E8CA4 /* BaseRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54B8874D230CEDC9003E8CA4 /* BaseRequest.swift */; };
+		54B88750230CEDE8003E8CA4 /* MessageError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54B8874F230CEDE8003E8CA4 /* MessageError.swift */; };
+		54B88754230CEEE2003E8CA4 /* AccountSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54B88753230CEEE2003E8CA4 /* AccountSession.swift */; };
+		54B88756230CEF02003E8CA4 /* LoginRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54B88755230CEF02003E8CA4 /* LoginRequest.swift */; };
 		54C03458230A9DD00037B1FF /* NibLoadableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54C03457230A9DD00037B1FF /* NibLoadableView.swift */; };
 		54C0345A230A9DE50037B1FF /* ReuseableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54C03459230A9DE50037B1FF /* ReuseableView.swift */; };
 		54C0345C230A9F260037B1FF /* UIView+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54C0345B230A9F260037B1FF /* UIView+Extensions.swift */; };
@@ -83,6 +89,12 @@
 		54B8873A230C1402003E8CA4 /* Router.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Router.swift; sourceTree = "<group>"; };
 		54B8873B230C1402003E8CA4 /* NetworkLogger.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkLogger.swift; sourceTree = "<group>"; };
 		54B8873C230C1402003E8CA4 /* EndPointType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EndPointType.swift; sourceTree = "<group>"; };
+		54B88749230CECDD003E8CA4 /* EnvConfiguration.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = EnvConfiguration.plist; sourceTree = "<group>"; };
+		54B8874B230CED09003E8CA4 /* APIConstant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIConstant.swift; sourceTree = "<group>"; };
+		54B8874D230CEDC9003E8CA4 /* BaseRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseRequest.swift; sourceTree = "<group>"; };
+		54B8874F230CEDE8003E8CA4 /* MessageError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageError.swift; sourceTree = "<group>"; };
+		54B88753230CEEE2003E8CA4 /* AccountSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountSession.swift; sourceTree = "<group>"; };
+		54B88755230CEF02003E8CA4 /* LoginRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginRequest.swift; sourceTree = "<group>"; };
 		54C03457230A9DD00037B1FF /* NibLoadableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NibLoadableView.swift; sourceTree = "<group>"; };
 		54C03459230A9DE50037B1FF /* ReuseableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReuseableView.swift; sourceTree = "<group>"; };
 		54C0345B230A9F260037B1FF /* UIView+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Extensions.swift"; sourceTree = "<group>"; };
@@ -126,8 +138,8 @@
 			children = (
 				54C03465230AAC3C0037B1FF /* Base */,
 				544FB7F92306503800A8D997 /* AppDelegate.swift */,
-				54C0345E230AA9B50037B1FF /* Detail */,
-				54C0345D230AA9A90037B1FF /* Main */,
+				54B88748230CECCA003E8CA4 /* Services */,
+				54B88747230CEC96003E8CA4 /* Presenter */,
 				544FB8002306503900A8D997 /* Assets.xcassets */,
 				544FB8022306503900A8D997 /* LaunchScreen.storyboard */,
 				544FB8052306503900A8D997 /* Info.plist */,
@@ -228,6 +240,44 @@
 				54B8873C230C1402003E8CA4 /* EndPointType.swift */,
 			);
 			path = Service;
+			sourceTree = "<group>";
+		};
+		54B88747230CEC96003E8CA4 /* Presenter */ = {
+			isa = PBXGroup;
+			children = (
+				54C0345E230AA9B50037B1FF /* Detail */,
+				54C0345D230AA9A90037B1FF /* Main */,
+			);
+			path = Presenter;
+			sourceTree = "<group>";
+		};
+		54B88748230CECCA003E8CA4 /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				54B88749230CECDD003E8CA4 /* EnvConfiguration.plist */,
+				54B8874B230CED09003E8CA4 /* APIConstant.swift */,
+				54B8874D230CEDC9003E8CA4 /* BaseRequest.swift */,
+				54B8874F230CEDE8003E8CA4 /* MessageError.swift */,
+				54B88751230CEDFE003E8CA4 /* API */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
+		54B88751230CEDFE003E8CA4 /* API */ = {
+			isa = PBXGroup;
+			children = (
+				54B88752230CEEB4003E8CA4 /* Authentication */,
+			);
+			path = API;
+			sourceTree = "<group>";
+		};
+		54B88752230CEEB4003E8CA4 /* Authentication */ = {
+			isa = PBXGroup;
+			children = (
+				54B88753230CEEE2003E8CA4 /* AccountSession.swift */,
+				54B88755230CEF02003E8CA4 /* LoginRequest.swift */,
+			);
+			path = Authentication;
 			sourceTree = "<group>";
 		};
 		54C03456230A9DC30037B1FF /* ReusableView */ = {
@@ -332,6 +382,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				54B88729230C004A003E8CA4 /* BaseLoadMoreCell.xib in Resources */,
+				54B8874A230CECDD003E8CA4 /* EnvConfiguration.plist in Resources */,
 				54D63D842306CC9D00C5F25C /* MainView.xib in Resources */,
 				54B8871C230BE5A7003E8CA4 /* DetailTableViewCell.xib in Resources */,
 				54B88740230C1403003E8CA4 /* Localizable.strings in Resources */,
@@ -358,6 +409,7 @@
 				544FB816230654B100A8D997 /* String+Extensions.swift in Sources */,
 				54B88716230BDE4D003E8CA4 /* BaseTableViewCell.swift in Sources */,
 				54B8872D230C0FA2003E8CA4 /* SwipeNavigationController.swift in Sources */,
+				54B8874E230CEDC9003E8CA4 /* BaseRequest.swift in Sources */,
 				54B88743230C1403003E8CA4 /* HTTPMethod.swift in Sources */,
 				544FB80E2306527C00A8D997 /* IPresenter.swift in Sources */,
 				54D63D822306CBFA00C5F25C /* MainView.swift in Sources */,
@@ -368,14 +420,18 @@
 				54B88718230BE013003E8CA4 /* PaginatedTableView.swift in Sources */,
 				54C03460230AA9C00037B1FF /* DetailController.swift in Sources */,
 				54B88720230BE946003E8CA4 /* UICollectionView+Extensions.swift in Sources */,
+				54B88756230CEF02003E8CA4 /* LoginRequest.swift in Sources */,
 				544FB80C2306523B00A8D997 /* IView.swift in Sources */,
+				54B88754230CEEE2003E8CA4 /* AccountSession.swift in Sources */,
 				54B8873D230C1403003E8CA4 /* ParameterEncoding.swift in Sources */,
 				544FB813230653CC00A8D997 /* BaseController.swift in Sources */,
 				544FB7FA2306503800A8D997 /* AppDelegate.swift in Sources */,
 				54B8871E230BE63A003E8CA4 /* UITableView+Extensions.swift in Sources */,
 				54B88745230C1403003E8CA4 /* NetworkLogger.swift in Sources */,
 				54B88741230C1403003E8CA4 /* NetworkDefaultMessageError.swift in Sources */,
+				54B88750230CEDE8003E8CA4 /* MessageError.swift in Sources */,
 				54B88742230C1403003E8CA4 /* HTTPTask.swift in Sources */,
+				54B8874C230CED09003E8CA4 /* APIConstant.swift in Sources */,
 				544FB821230659B900A8D997 /* MVPController.swift in Sources */,
 				54B8873F230C1403003E8CA4 /* JSONParameterEncoder.swift in Sources */,
 				54C03462230AA9D20037B1FF /* DetailView.swift in Sources */,

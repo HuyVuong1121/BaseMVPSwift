@@ -20,4 +20,6 @@ class MainView: MVPView {
     }
     
     struct NextCommand: ICommand {}
+    struct LoginGoogleCommand: ICommand {}
+    struct FacebookCommand: ICommand {}
 }
