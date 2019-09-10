@@ -19,7 +19,7 @@ class MainController: MVPController<MainView> {
 
     override func onExecuteCommand(command: ICommand) {
         if let _ = command as? MainView.NextCommand {
-            navigationController?.pushViewController(DetailController(), animated: true)
+            navigationController?.pushViewController(SubDetailController(), animated: true)
         } else if let _ = command as? MainView.FacebookCommand {
             loginRequest.request(type: AccountSession.self, route: .loginFacebook(fb_token: "access_token_from_facebook"), success: { account in
                 // hidden loading and process UI

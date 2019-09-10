@@ -7,4 +7,4 @@
 //
 
 import UIKit
-class TPCBaseCollectionViewCell: UICollectionViewCell, ReusableView, NibLoadableView {}
+class BaseCollectionViewCell: UICollectionViewCell, ReusableView, NibLoadableView {}
