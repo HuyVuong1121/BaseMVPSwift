@@ -21,11 +21,12 @@ protocol NetworkRouter: class {
 class Router<EndPoint: EndPointType>: NetworkRouter {
     
     init() {
+        Log.debug("Router \(type(of: self)) init")
         print("🔹🔹🔹 Router \(type(of: self)) init 🔹🔹🔹")
     }
     
     deinit {
-        print("🔹🔹🔹 Router \(type(of: self)) deinit 🔹🔹🔹")
+        Log.debug("Router \(type(of: self)) deinit")
     }
     private var task: URLSessionTask?
     

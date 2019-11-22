@@ -15,17 +15,19 @@ class DetailView: MVPView {
     
     var list = [Int]()
     
-    override func onInitView(topLayoutGuide: UILayoutSupport, bottomLayoutGuide: UILayoutSupport) {
-        super.onInitView(topLayoutGuide: topLayoutGuide, bottomLayoutGuide: bottomLayoutGuide)
+    override func onInitView() {
+        super.onInitView()
         
         tableView.registerCell(type: DetailTableViewCell.self)
         
         // Add paginated delegates only
         tableView.paginatedDelegate = self
-        tableView.paginatedDataSource = self
+        tableView.delegate = self
+        tableView.dataSource = self
         
         // More settings
         tableView.enablePullToRefresh = true
+        tableView.enableLoadMore = true
         
         tableView.loadData(refresh: true)
     }
@@ -34,7 +36,7 @@ class DetailView: MVPView {
         mPresenter?.executeCommand(command: PrevCommand())
     }
     
-    struct PrevCommand: ICommand {}
+    struct PrevCommand: CommandProtocol {}
 }
 
 //
@@ -63,7 +65,7 @@ extension DetailView: PaginatedTableViewDelegate {
 //
 // MARK: Paginated Data Source
 //
-extension DetailView: PaginatedTableViewDataSource {
+extension DetailView: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return list.count
     }
@@ -72,9 +74,5 @@ extension DetailView: PaginatedTableViewDataSource {
         let cell = tableView.dequeueReusableCell(type: DetailTableViewCell.self, for: indexPath)
         cell.indexLbl.text = "\(indexPath.row)"
         return cell
-    }
-    
-    func numberOfSections(in tableView: UITableView) -> Int {
-        return 1
     }
 }

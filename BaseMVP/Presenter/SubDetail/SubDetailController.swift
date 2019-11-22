@@ -8,6 +8,6 @@
 
 import UIKit
 
-class SubDetailController: MVPController<SubDetailView> {
+class SubDetailController: MVPViewController<SubDetailView> {
     
 }

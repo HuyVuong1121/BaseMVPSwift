@@ -8,21 +8,9 @@
 
 import UIKit
 
-public protocol PaginatedTableViewDataSource: class {
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell
-    func numberOfSections(in tableView: UITableView) -> Int
-}
-
 @objc public protocol PaginatedTableViewDelegate: class {
-    @objc optional func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath)
-    @objc optional func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat
-    @objc optional func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat
-    @objc optional func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath)
-    @objc optional func tableView(_ tableView: UITableView, didEndDisplaying cell: UITableViewCell, forRowAt indexPath: IndexPath)
-    func loadMore(_ pageNumber: Int, _ pageSize: Int, onSuccess: ((Bool) -> Void)?, onError: ((Error) -> Void)?)
-    @objc optional func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat
-    @objc optional func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView?
+    @objc optional func loadMore(_ pageNumber: Int, _ pageSize: Int, onSuccess: ((Bool) -> Void)?, onError: ((Error) -> Void)?)
+
 }
 
 //
@@ -40,10 +28,6 @@ public class PaginatedTableView: UITableView {
     
     // First page can vary for different APIs thus can be changed from the VC
     public var firstPage = 1
-    
-    // Table view settings
-    private var sections = 0
-    public var loadMoreViewHeight: CGFloat = 100
    
     public var enablePullToRefresh = false {
         willSet {
@@ -56,10 +40,18 @@ public class PaginatedTableView: UITableView {
         }
     }
     
+    public var enableLoadMore = false {
+        willSet {
+            if newValue == enableLoadMore { return }
+            if newValue {
+                self.loadControl = UILoadControl(target: self, action: #selector(handleLoadMore(sender:)))
+            }
+        }
+    }
+    
     // Only delegates you want to assign value to while using this wrapper
     weak open var paginatedDelegate: PaginatedTableViewDelegate?
-    weak open var paginatedDataSource: PaginatedTableViewDataSource?
-    
+   
     // refresh control
     lazy var refreshControltableView: UIRefreshControl = {
         let refreshControl = UIRefreshControl()
@@ -92,16 +84,10 @@ public class PaginatedTableView: UITableView {
     
     //common func to init our view
     private func setupView() {
-        self.delegate = self
-        self.dataSource = self
-        self.prefetchDataSource = self
         self.alwaysBounceVertical = true
         
         // Enable pull to refresh control
         self.enablePullToRefresh = true
-        
-        // register load more cell
-        self.registerCell(type: BaseLoadMoreCell.self)
     }
 }
 
@@ -118,6 +104,11 @@ extension PaginatedTableView {
         load(refresh: true)
     }
     
+    @objc private func handleLoadMore(sender: AnyObject?) {
+        load()
+    }
+
+    
     // All loading logic goes here i.e. showing/hiding of loaders and pagination
     private func load(refresh: Bool = false) {
         
@@ -132,7 +123,7 @@ extension PaginatedTableView {
         
         // start loading
         isLoading = true
-        paginatedDelegate?.loadMore(currentPage, pageSize, onSuccess: { hasMore in
+        paginatedDelegate?.loadMore?(currentPage, pageSize, onSuccess: { hasMore in
             self.hasMoreData = hasMore
             self.currentPage += 1
             self.isLoading = false
@@ -150,102 +141,6 @@ extension PaginatedTableView {
     
     // Scroll to end detector
     public func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        let height = scrollView.frame.size.height
-        let contentYoffset = scrollView.contentOffset.y
-        let distanceFromBottom = scrollView.contentSize.height - contentYoffset
-        if distanceFromBottom < height {
-            load()
-        }
-    }
-}
-
-//
-// MARK: table View Delegates and Data Source methods
-//
-extension PaginatedTableView: UITableViewDataSource, UITableViewDelegate {
-    public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        
-        // Return item for loader in case of last section
-        if section == sections - 1 {
-            // always have 1 row for the loader section - hide it using a zero height in
-            // heightForRowAt:
-            return 1
-        } else {
-            return paginatedDataSource?.tableView(tableView, numberOfRowsInSection: section) ?? 0
-        }
-    }
-    
-    public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        // If it is loading section
-        if indexPath.section == sections - 1 {
-            let cell = tableView.dequeueReusableCell(type: BaseLoadMoreCell.self, for: indexPath)
-            if self.isLoading {
-                cell.activityIndicator.startAnimating()
-            } else {
-                cell.activityIndicator.stopAnimating()
-            }
-            return cell
-        } else {
-            // return whatever cells user wants to
-            return paginatedDataSource?.tableView(tableView, cellForRowAt: indexPath) ?? UITableViewCell()
-        }
-    }
-    
-    public func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
-        return paginatedDelegate?.tableView?(tableView, estimatedHeightForRowAt: indexPath) ?? estimatedRowHeight
-    }
-    
-    public func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        paginatedDelegate?.tableView?(tableView, willDisplay: cell, forRowAt: indexPath)
-    }
-    
-    public func tableView(_ tableView: UITableView, didEndDisplaying cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        paginatedDelegate?.tableView?(tableView, didEndDisplaying: cell, forRowAt: indexPath)
-    }
-    
-    public func numberOfSections(in tableView: UITableView) -> Int {
-        // Add one section for loader
-        sections = 1
-        
-        // Add sections to one for loader
-        if let numberOfSections = paginatedDataSource?.numberOfSections(in: tableView) {
-            sections += numberOfSections
-        }
-        return sections
-    }
-    
-    public func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        return paginatedDelegate?.tableView?(tableView, viewForHeaderInSection: section)
-    }
-    
-    public func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        paginatedDelegate?.tableView?(tableView, didSelectRowAt: indexPath)
-    }
-    
-    public func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return paginatedDelegate?.tableView?(tableView, heightForHeaderInSection: section) ?? 0
-    }
-    
-    public func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        if indexPath.section == sections - 1 {
-            // the section that has the loading indicator
-            let isRefreshing = refreshControl?.isRefreshing ?? false
-            if !isRefreshing && self.isLoading {
-                return loadMoreViewHeight
-            }
-            return 0.0
-        }
-        return paginatedDelegate?.tableView?(tableView, heightForRowAt: indexPath) ?? UITableView.automaticDimension
-    }
-}
-
-//
-// MARK: Prefetching data source
-//
-extension PaginatedTableView: UITableViewDataSourcePrefetching {
-    public func tableView(_ tableView: UITableView, prefetchRowsAt indexPaths: [IndexPath]) {
-        if indexPaths.contains(where: { $0.section == sections - 1 }) {
-            load()
-        }
+        scrollView.loadControl?.update()
     }
 }

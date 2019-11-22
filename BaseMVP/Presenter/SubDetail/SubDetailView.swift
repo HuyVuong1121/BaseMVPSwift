@@ -15,8 +15,8 @@ class SubDetailView: MVPView {
     
     var list = [Int]()
     
-    override func onInitView(topLayoutGuide: UILayoutSupport, bottomLayoutGuide: UILayoutSupport) {
-        super.onInitView(topLayoutGuide: topLayoutGuide, bottomLayoutGuide: bottomLayoutGuide)
+    override func onInitView() {
+        super.onInitView()
         
         collectionView.registerCell(type: SubDetailCollectionViewCell.self)
 //
@@ -34,7 +34,7 @@ class SubDetailView: MVPView {
         mPresenter?.executeCommand(command: PrevCommand())
     }
     
-    struct PrevCommand: ICommand {}
+    struct PrevCommand: CommandProtocol {}
 }
 
 extension SubDetailView: PaginatedCollectionViewDelegate {

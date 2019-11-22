@@ -8,18 +8,22 @@
 
 import UIKit
 
-class MainController: MVPController<MainView> {
+class MainController: MVPViewController<MainView> {
     
     let loginRequest = BaseRequest<LoginRequest>()
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        mView?.setName(name: "Chungtv")
-    }
-
-    override func onExecuteCommand(command: ICommand) {
+    override func onExecuteCommand(command: CommandProtocol) {
         if let _ = command as? MainView.NextCommand {
-            navigationController?.pushViewController(SubDetailController(), animated: true)
+            //            navigationController?.pushViewController(DetailController(), animated: true)
+            let req = CheckNumberAction.CheckNumberActionRequest(value: "1234")
+            let action = CheckNumberAction()
+            switch action.execute(reqValue: req) {
+            case .success(let isNumber):
+                Log.debug("\(isNumber) Đúng là số")
+            case .failure(let error):
+                Log.debug(error.localizedDescription)
+            }
+            
         } else if let _ = command as? MainView.FacebookCommand {
             loginRequest.request(type: AccountSession.self, route: .loginFacebook(fb_token: "access_token_from_facebook"), success: { account in
                 // hidden loading and process UI
@@ -34,6 +38,24 @@ class MainController: MVPController<MainView> {
             })
         }
     }
+    
+}
 
+class CheckNumberAction: AsyncOperation, ActionProtocol {
+    
+    typealias RequestValue = CheckNumberActionRequest
+    typealias ResponseValue = Bool
+    
+    func onExecute(reqValue: CheckNumberAction.CheckNumberActionRequest) -> Result<Bool, ActionException> {
+        if let _ = Int(reqValue.value) {
+            return Result.success(true)
+        } else {
+            return Result.failure(ActionException("Méo phải số"))
+        }
+    }
+    
+    struct CheckNumberActionRequest: ActionRequestValue {
+        let value: String
+    }
 }
 

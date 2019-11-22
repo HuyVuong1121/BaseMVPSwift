@@ -19,7 +19,7 @@ class MainView: MVPView {
         mPresenter?.executeCommand(command: NextCommand())
     }
     
-    struct NextCommand: ICommand {}
-    struct LoginGoogleCommand: ICommand {}
-    struct FacebookCommand: ICommand {}
+    struct NextCommand: CommandProtocol {}
+    struct LoginGoogleCommand: CommandProtocol {}
+    struct FacebookCommand: CommandProtocol {}
 }

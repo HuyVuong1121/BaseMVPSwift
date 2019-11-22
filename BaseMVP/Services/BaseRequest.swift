@@ -12,14 +12,14 @@ class BaseRequest<EndPoint: EndPointType>: Router<EndPoint> {
     
     override func handleDataResponse<T>(data: Data?, response: URLResponse?, error: Error?, success: @escaping (T) -> Void, failure: @escaping (String?, Int) -> Void) where T : Decodable {
         guard error == nil else {
-            failure(NetworkDefaultMessageError.failed.rawValue, 998)
+            failure(NetworkError.failed.rawValue, 998)
             print("\n ℹ️ℹ️ℹ️  RESPONSE  ℹ️ℹ️ℹ️ \n")
             print(error?.localizedDescription ?? "")
             print("\n ℹ️ℹ️ℹ️  END  ℹ️ℹ️ℹ️ \n")
             return
         }
         guard let _response = response as? HTTPURLResponse, let responseData = data else {
-            failure(NetworkDefaultMessageError.noData.rawValue, 999)
+            failure(NetworkError.noData.rawValue, 999)
             return
         }
         NetworkLogger.log(response: _response, data: responseData)
@@ -30,15 +30,15 @@ class BaseRequest<EndPoint: EndPointType>: Router<EndPoint> {
                 let model = try JSONDecoder().decode(T.self, from: responseData)
                 success(model)
             } catch {
-                failure(NetworkDefaultMessageError.unableToDecode.rawValue, 0)
+                failure(NetworkError.unableToDecode.rawValue, 0)
             }
         case 501...599:
-            failure(NetworkDefaultMessageError.badRequest.rawValue, _response.statusCode)
+            failure(NetworkError.badRequest.rawValue, _response.statusCode)
         case 600:
-            failure(NetworkDefaultMessageError.outdated.rawValue, _response.statusCode)
+            failure(NetworkError.outdated.rawValue, _response.statusCode)
         default:
             let message = try? JSONDecoder().decode(MessageError.self, from: responseData)
-            failure(message?.message ?? NetworkDefaultMessageError.failed.rawValue, _response.statusCode)
+            failure(message?.message ?? NetworkError.failed.rawValue, _response.statusCode)
         }
     }
 }

@@ -8,8 +8,8 @@
 
 import UIKit
 
-class DetailController: MVPController<DetailView> {
-    override func onExecuteCommand(command: ICommand) {
+class DetailController: MVPViewController<DetailView> {
+    override func onExecuteCommand(command: CommandProtocol) {
         if let _ = command as? DetailView.PrevCommand {
             navigationController?.popViewController(animated: true)
         }
